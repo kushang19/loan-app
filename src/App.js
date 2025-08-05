@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./layout/Layout";
+import Login from "./pages/Login/Login";
+import FormPage from "./pages/FormPage/FormPage";
+import Quotations from "./pages/Quotation/Quotations";
+import CustomButtonTesting from "./TestingPages/CustomButtonTesting/CustomButtonTesting";
+import InputsTesting from "./TestingPages/InputsTesting/InputsTesting";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Login />} />
+          <Route path="/form" element={<FormPage />} />
+          <Route path="/quotations" element={<Quotations />} />
+          <Route path="/custom-buttons" element={<CustomButtonTesting />} />
+          <Route path="/dynamic-inputs" element={<InputsTesting />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
+
+// https://www.shriramfinance.in/personal-loan
