@@ -1,10 +1,12 @@
 import React from "react";
-import CustomProgressBar from "../../shared/CustomForm/FormFields/CustomProgressBar";
-import CustomCard from "../../shared/CustomCard/CustomCard";
-import CustomForm from "../../shared/CustomForm";
-import CustomButton from "../../shared/CustomButton/CustomButton";
+import { useNavigate } from "react-router-dom";
+import CustomProgressBar from "../../../shared/CustomForm/FormFields/CustomProgressBar";
+import CustomForm from "../../../shared/CustomForm";
+import CustomButton from "../../../shared/CustomButton/CustomButton";
+import CustomCard from "../../../shared/CustomCard/CustomCard";
+import ROUTES from "../../../routes";
 
-const personalDetails = [
+const personalDetails1 = [
   {
     id: 1,
     title: "First Name",
@@ -19,7 +21,7 @@ const personalDetails = [
       regexError: "Please enter your first name ",
     },
   },
-    {
+  {
     id: 2,
     title: "Last Name",
     placeholder: "Enter last name",
@@ -63,39 +65,52 @@ const personalDetails = [
   },
 ];
 
-const FormPage = () => {
+const PersonalDetails1 = () => {
+  const navigate = useNavigate();
   const steps = [
     "Personal Details",
     "Requirement Details",
     "Professional Details",
-    "Confirmation",
   ];
 
-  const goBack = () => {
-    console.log("I was clicked");
+  const prevBtn = () => {
+    navigate(ROUTES.home);
   };
 
   const handleFormSubmit = (data) => {
     console.log("Submitted Data:", data);
-    sessionStorage.setItem('personalDetails-1', JSON.stringify(data));
-
+    sessionStorage.setItem("personalDetails-1", JSON.stringify(data));
+    navigate(ROUTES.personalDetails2);
   };
 
   return (
     <>
       <div className="max-w-md mx-auto p-2 mt-10">
-
         <CustomCard>
-        <CustomProgressBar steps={steps} currentStep={1} onBack={goBack} />
-          <h2 style={{margin: "20px 0", fontSize: '25px', fontWeight: "bold"}}>Your Loan Journey Begins Here!</h2>
-          <CustomForm config={personalDetails} onSubmit={handleFormSubmit}>
-            <CustomButton
-              type="submit"
-              bgColor="bg-black"
-              textColor="text-white"
-            >
-              Next
-            </CustomButton>
+          <CustomProgressBar steps={steps} currentStep={1}  />
+          <h2
+            className="text-blue-600"
+            style={{ margin: "20px 0", fontSize: "25px", fontWeight: "bold" }}
+          >
+            Your Loan Journey Begins Here!
+          </h2>
+          <CustomForm config={personalDetails1} onSubmit={handleFormSubmit}>
+            <div className="flex justify-end gap-3 flex-wrap mt-4 w-full">
+              <CustomButton
+                hover="hover:bg-blue-700"
+                rounded="rounded-full"
+                onClick={prevBtn}
+              >
+                Back
+              </CustomButton>
+              <CustomButton
+                type="submit"
+                hover="hover:bg-blue-700"
+                rounded="rounded-full"
+              >
+                Next
+              </CustomButton>
+            </div>
           </CustomForm>
         </CustomCard>
       </div>
@@ -103,4 +118,4 @@ const FormPage = () => {
   );
 };
 
-export default FormPage;
+export default PersonalDetails1;

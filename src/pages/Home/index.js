@@ -3,6 +3,7 @@ import CustomCard from "../../shared/CustomCard/CustomCard";
 import CustomForm from "../../shared/CustomForm";
 import CustomButton from "../../shared/CustomButton/CustomButton";
 import OTPModal from "../../Modals/OTPModal";
+import ROUTES from "../../routes";
 
 const mobileInput = [
   {
@@ -44,15 +45,26 @@ const Home = () => {
   return (
     <>
       <div className="max-w-md mx-auto p-2 mt-10">
+         <h1
+            className="text-blue-800"
+            style={{ margin: "20px 0", fontSize: "27px", fontWeight: "bold", textAlign: "center" }}
+          >
+            Please Enter Your Mobile Number To Login Our Loan Application.
+            <span className="text-5xl">💰</span>
+            <span className="text-6xl">💰</span>
+            <span className="text-7xl">💰</span>
+          </h1>
         <CustomCard>
           <CustomForm config={mobileInput} onSubmit={handleFormSubmit}>
+            <div className="flex justify-end flex-wrap mt-4 w-full">
             <CustomButton
               type="submit"
-              bgColor="bg-black"
-              textColor="text-white"
+              rounded="rounded-full"
+              hover="hover:bg-blue-700"
             >
               Submit
             </CustomButton>
+            </div>
           </CustomForm>
         </CustomCard>
 
@@ -60,7 +72,7 @@ const Home = () => {
           isOpen={showOTP}
           onClose={() => setShowOTP(false)}
           timerSeconds={120} // you can customize the timer
-          route="/form"
+          route={ROUTES.personalDetails1}
         />
       </div>
     </>

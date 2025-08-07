@@ -6,14 +6,14 @@ const CustomProgressBar = ({ steps, currentStep, onBack }) => {
   return (
     <div className="w-full mt-5 mb-5">
       {/* Back Button */}
-      {currentStep > 1 && (
+      {/* {currentStep > 1 && (
         <button
           onClick={onBack}
           className="mb-4 text-blue-600 font-medium"
         >
           &lt; Back
         </button>
-      )}
+      )} */}
 
       {/* Progress Bar */}
       <div className="relative w-full h-2 bg-gray-300 rounded-full overflow-hidden mb-4">

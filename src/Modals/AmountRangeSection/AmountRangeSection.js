@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const AmountRangeSection = ({ minAmount = 50000, maxAmount = 1000000 }) => {
+const AmountRangeSection = ({ minAmount = 50000, maxAmount = 1000000, setRsAmount }) => {
   const [amount, setAmount] = useState(minAmount);
   const [inputValue, setInputValue] = useState(minAmount.toLocaleString("en-IN"));
   const [error, setError] = useState("");
@@ -14,6 +14,7 @@ const AmountRangeSection = ({ minAmount = 50000, maxAmount = 1000000 }) => {
   // Log amount whenever it changes
   useEffect(() => {
     console.log("Current amount:", amount);
+    setRsAmount(amount);
   }, [amount]);
 
   const handleSliderChange = (e) => {
