@@ -1,53 +1,84 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 const AmountRangeSection = ({ minAmount = 50000, maxAmount = 1000000 }) => {
   const [amount, setAmount] = useState(minAmount);
   const [inputValue, setInputValue] = useState(minAmount.toLocaleString("en-IN"));
   const [error, setError] = useState("");
-  const timeoutRef = useRef(null);
+  const [typingTimeout, setTypingTimeout] = useState(null);
 
-  const formatAmount = (amt) => amt.toLocaleString("en-IN");
+  const formatAmount = (amt) => {
+    if (isNaN(amt)) return "0";
+    return amt.toLocaleString("en-IN");
+  };
 
-  // Linear progress update via slider
+  // Log amount whenever it changes
+  useEffect(() => {
+    console.log("Current amount:", amount);
+  }, [amount]);
+
   const handleSliderChange = (e) => {
     const val = parseInt(e.target.value);
-    setAmount(val);
-    setInputValue(formatAmount(val));
-    setError("");
-    console.log("Confirmed Amount:", val);
+    updateAmount(val);
   };
 
-  // Update amount after user stops typing for 1 second
   const handleInputChange = (e) => {
-    const raw = e.target.value.replace(/,/g, "");
-    const val = parseInt(raw);
-    setInputValue(e.target.value);
+    const rawValue = e.target.value.replace(/,/g, "");
+    
+    if (typingTimeout) {
+      clearTimeout(typingTimeout);
+    }
 
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (rawValue === "") {
+      setInputValue("");
+      setError("Please enter a valid number");
+      return;
+    }
 
-    timeoutRef.current = setTimeout(() => {
-      if (isNaN(val)) {
-        setError("Please enter a valid number");
-        return;
-      }
+    if (/^\d+$/.test(rawValue)) {
+      const formattedValue = formatAmount(parseInt(rawValue));
+      setInputValue(formattedValue);
 
-      if (val < minAmount || val > maxAmount) {
-        setError(
-          `Enter between ₹${formatAmount(minAmount)} and ₹${formatAmount(maxAmount)}`
-        );
-      } else {
-        setAmount(val);
-        setInputValue(formatAmount(val));
-        setError("");
-        console.log("Confirmed Amount:", val);
-      }
-    }, 1000);
+      const timeout = setTimeout(() => {
+        const val = parseInt(rawValue);
+        validateAndUpdateAmount(val);
+      }, 1000);
+
+      setTypingTimeout(timeout);
+    } else {
+      setInputValue(e.target.value);
+      setError("Please enter a valid number");
+    }
   };
 
-  const percentageFilled = ((amount - minAmount) / (maxAmount - minAmount)) * 100;
+  const validateAndUpdateAmount = (val) => {
+    if (isNaN(val)) {
+      setError("Please enter a valid number");
+      return;
+    }
 
-  // For circle, total path length ~100
-  const strokeDashoffset = 100 - percentageFilled;
+    if (val < minAmount || val > maxAmount) {
+      setError(
+        `Enter between ₹${formatAmount(minAmount)} and ₹${formatAmount(maxAmount)}`
+      );
+    } else {
+      updateAmount(val);
+      setError("");
+    }
+  };
+
+  const updateAmount = (val) => {
+    const clampedVal = Math.min(Math.max(val, minAmount), maxAmount);
+    setAmount(clampedVal);
+    setInputValue(formatAmount(clampedVal));
+  };
+
+  // Calculate percentage filled (0 to 100)
+  const percentageFilled = ((amount - minAmount) / (maxAmount - minAmount)) * 100;
+  
+  // Circle properties
+  const radius = 15.9155; // This matches your SVG path
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (percentageFilled / 100) * circumference;
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-md max-w-3xl mx-auto mt-6">
@@ -75,9 +106,7 @@ const AmountRangeSection = ({ minAmount = 50000, maxAmount = 1000000 }) => {
 
       <div className="flex justify-between text-sm text-gray-600 mb-2">
         <span>Min ₹{formatAmount(minAmount)}</span>
-        <span>
-          Max {maxAmount >= 100000 ? `₹${maxAmount / 100000} L` : formatAmount(maxAmount)}
-        </span>
+        <span>Max ₹{formatAmount(maxAmount)}</span>
       </div>
 
       {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
@@ -91,20 +120,21 @@ const AmountRangeSection = ({ minAmount = 50000, maxAmount = 1000000 }) => {
               <path
                 className="text-gray-200"
                 d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                   a 15.9155 15.9155 0 0 1 0 31.831
+                   a 15.9155 15.9155 0 0 1 0 -31.831"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
+                strokeDasharray={circumference}
               />
               <path
                 className="text-yellow-400"
                 d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831"
+                   a 15.9155 15.9155 0 0 1 0 31.831"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
-                strokeDasharray="100"
+                strokeDasharray={circumference}
                 strokeDashoffset={strokeDashoffset}
               />
             </svg>

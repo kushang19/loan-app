@@ -1,6 +1,6 @@
 import React from "react";
 
-const EmailField = ({ field, register, error }) => {
+const FormEmailField = ({ field, register, error }) => {
   const validation = {};
 
   if (field.validations?.isRequired) {
@@ -33,4 +33,4 @@ const EmailField = ({ field, register, error }) => {
   );
 };
 
-export default EmailField;
+export default FormEmailField;

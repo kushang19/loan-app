@@ -1,6 +1,6 @@
 import React from "react";
 
-const TextField = ({ field, register, error }) => {
+const FormTextField = ({ field, register, error }) => {
   const validation = {};
 
   if (field.validations?.isRequired) {
@@ -31,4 +31,4 @@ const TextField = ({ field, register, error }) => {
   );
 };
 
-export default TextField;
+export default FormTextField;

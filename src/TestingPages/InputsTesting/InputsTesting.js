@@ -1,12 +1,12 @@
 import CustomForm from "../../shared/CustomForm";
-import CustomProgressBar from "../../shared/CustomForm/Fields/CustomProgressBar";
+import CustomProgressBar from "../../shared/CustomForm/FormFields/CustomProgressBar";
 import CustomButton from "../../shared/CustomButton/CustomButton";
 import { useState } from "react";
 import OTPModal from "../../Modals/OTPModal";
 
 import { formConfig } from "../../JSON/formConfig";
 import AmountRangeModal from "../../Modals/AmountRangeModal";
-import AmountRangeSection from "../../Modals/AmountRangeSection";
+import AmountRangeSection from "../../Modals/AmountRangeSection/AmountRangeSection";
 
 const InputsTesting = () => {
   const steps = [

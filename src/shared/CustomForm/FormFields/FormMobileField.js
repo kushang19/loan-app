@@ -1,6 +1,6 @@
 import React from "react";
 
-const MobileField = ({ field, register, error }) => {
+const FormMobileField = ({ field, register, error }) => {
   const validation = {};
 
   if (field.validations?.isRequired) {
@@ -33,4 +33,4 @@ const MobileField = ({ field, register, error }) => {
   );
 };
 
-export default MobileField;
+export default FormMobileField;

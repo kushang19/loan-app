@@ -1,13 +1,13 @@
 import React from "react";
-import TextField from "./Fields/TextField";
-import DateField from "./Fields/DateField";
-import MobileField from "./Fields/MobileField";
-import EmailField from "./Fields/EmailField";
-import CustomSelect from "./Fields/CustomSelect";
-import CustomRadioButton from "./Fields/CustomRadioButton";
-import CustomRadioButton2 from "./Fields/CustomRadioButton2";
-import CustomCheckbox from "./Fields/CustomCheckbox";
-import CustomCardButton from "./Fields/CustomCardButton";
+import FormTextField from "./FormFields/FormTextField";
+import FormDateField from "./FormFields/FormDateField";
+import FormMobileField from "./FormFields/FormMobileField";
+import FormEmailField from "./FormFields/FormEmailField";
+import CustomSelect from "./FormFields/CustomSelect";
+import CustomRadioButton from "./FormFields/CustomRadioButton";
+import CustomRadioButton2 from "./FormFields/CustomRadioButton2";
+import CustomCheckbox from "./FormFields/CustomCheckbox";
+import CustomCardButton from "./FormFields/CustomCardButton";
 
 const FormDynamicInputFields = ({
   field,
@@ -21,13 +21,13 @@ const FormDynamicInputFields = ({
 }) => {
   switch (field.type) {
     case "textField":
-      return <TextField field={field} register={register} error={error} />;
+      return <FormTextField field={field} register={register} error={error} />;
     case "dateField":
-      return <DateField field={field} register={register} error={error} />;
+      return <FormDateField field={field} register={register} error={error} />;
     case "mobileField":
-      return <MobileField field={field} register={register} error={error} />;
+      return <FormMobileField field={field} register={register} error={error} />;
     case "emailField":
-      return <EmailField field={field} register={register} error={error} />;
+      return <FormEmailField field={field} register={register} error={error} />;
     case "reactSelect":
       return (
         <CustomSelect

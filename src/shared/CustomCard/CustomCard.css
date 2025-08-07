@@ -2,9 +2,9 @@
   transition: all 0.3s ease;
 }
 
-.custom-card:hover {
+/* .custom-card:hover {
   transform: translateY(-4px);
-}
+} */
 
 .card-image {
   width: 100%;

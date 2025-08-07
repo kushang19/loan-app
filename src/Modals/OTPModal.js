@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
-const OTPModal = ({ isOpen, onClose, timerSeconds = 120 }) => {
+const OTPModal = ({ isOpen, onClose, timerSeconds = 120, route }) => {
   const [timeLeft, setTimeLeft] = useState(timerSeconds);
   const [showResend, setShowResend] = useState(false);
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
   const inputRefs = useRef([]);
+
+  const navigate = useNavigate();
 
   const correctOTP = "2223"; // Default OTP for now
 
@@ -54,6 +57,7 @@ const OTPModal = ({ isOpen, onClose, timerSeconds = 120 }) => {
       if (enteredOTP === correctOTP) {
         console.log("Success !!");
         onClose();
+        navigate(route);
       } else {
         setTimeout(() => {
           alert("Incorrect OTP");

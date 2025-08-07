@@ -19,13 +19,13 @@ const CustomCheckbox = ({
 
   return (
     <div className="form-group mb-4">
-      <label className="inline-flex items-center space-x-2 cursor-pointer">
+      <label className="inline-flex space-x-2 cursor-pointer">
         <input
           type="checkbox"
           checked={value || false}
           onChange={(e) => onChange(e.target.checked)}
           disabled={isDisabled}
-          className="form-checkbox w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+          className="form-checkbox w-4 h-4 mt-1 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
         />
         <span className="text-gray-800 text-sm">{label}</span>
       </label>

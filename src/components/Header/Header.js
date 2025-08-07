@@ -16,25 +16,40 @@ const Header = () => {
                 src="/logo.png" // place your logo in public/logo.png or update path
                 alt="Logo"
               /> */}
-             <b>L O G O</b>
+              <b>L O G O</b>
             </Link>
           </div>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex space-x-8">
-            <Link to="/" className="text-gray-700 hover:text-blue-600 font-medium">
+            <Link
+              to="/"
+              className="text-gray-700 hover:text-blue-600 font-medium"
+            >
               Home
             </Link>
-            <Link to="/about" className="text-gray-700 hover:text-blue-600 font-medium">
+            <Link
+              to="/about"
+              className="text-gray-700 hover:text-blue-600 font-medium"
+            >
               About Us
             </Link>
-             <Link to="/contact-us" className="text-gray-700 hover:text-blue-600 font-medium">
+            <Link
+              to="/contact"
+              className="text-gray-700 hover:text-blue-600 font-medium"
+            >
               Contact Us
             </Link>
-             <Link to="/faqs" className="text-gray-700 hover:text-blue-600 font-medium">
+            <Link
+              to="/faqs"
+              className="text-gray-700 hover:text-blue-600 font-medium"
+            >
               FAQs
             </Link>
-            <Link to="/blog-articles" className="text-gray-700 hover:text-blue-600 font-medium">
+            <Link
+              to="/blog-articles"
+              className="text-gray-700 hover:text-blue-600 font-medium"
+            >
               Blog & Articles
             </Link>
           </nav>
@@ -81,8 +96,17 @@ const Header = () => {
           <Link to="/about" className="block text-gray-700 hover:text-blue-600">
             About Us
           </Link>
-          <Link to="/blog" className="block text-gray-700 hover:text-blue-600">
-            Blog
+          <Link to="/contact" className="block text-gray-700 hover:text-blue-600">
+            Contact Us
+          </Link>
+          <Link to="/faqs" className="block text-gray-700 hover:text-blue-600">
+            FAQs
+          </Link>
+          <Link
+            to="/blog-articles"
+            className="block text-gray-700 hover:text-blue-600"
+          >
+            Blog & Articles
           </Link>
         </div>
       )}
