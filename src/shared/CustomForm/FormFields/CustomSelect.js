@@ -1,4 +1,3 @@
-// components/form/CustomSelect.js
 import React from "react";
 import Select from "react-select";
 import { Controller } from "react-hook-form";
@@ -37,7 +36,6 @@ const CustomSelect = ({
         rules={rules}
         render={({ field }) => (
           <Select
-            // isMulti
             isClearable
             {...field}
             options={options}
@@ -45,7 +43,13 @@ const CustomSelect = ({
             placeholder={placeholder}
             styles={customStyles}
             onChange={(selected) => field.onChange(selected)}
-            value={options.find((opt) => opt.value === field.value)}
+            value={options.find((opt) => {
+              // Handle both object and primitive value cases
+              if (typeof field.value === 'object') {
+                return opt.value === field.value?.value;
+              }
+              return opt.value === field.value;
+            })}
           />
         )}
       />

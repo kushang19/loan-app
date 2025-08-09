@@ -1,7 +1,7 @@
 import React from "react";
 import { Controller } from "react-hook-form";
 
-const FormTextField = ({ field, error, control }) => {
+const FormTextField = ({ field, error, control, setValue }) => {
   const validation = {};
 
   if (field.validations?.isRequired) {

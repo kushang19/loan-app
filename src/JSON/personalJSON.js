@@ -1,4 +1,4 @@
-const personalDetailsJSON = {
+const personalJSON = {
   1: [
     {
       id: 1,
@@ -133,4 +133,4 @@ const personalDetailsJSON = {
   ],
 };
 
-export default personalDetailsJSON;
+export default personalJSON;

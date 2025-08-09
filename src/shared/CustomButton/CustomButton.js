@@ -19,6 +19,7 @@ const CustomButton = ({
   icon = null,
   fullWidth = false,
   hover = "",
+  title,
   ...rest
 }) => {
   return (
@@ -46,7 +47,7 @@ const CustomButton = ({
       {...rest}
     >
       {icon && <span className="flex items-center">{icon}</span>}
-      {children}
+      {title}
     </button>
   );
 };
@@ -68,6 +69,7 @@ CustomButton.propTypes = {
   icon: PropTypes.node,
   fullWidth: PropTypes.bool,
   hover: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default CustomButton;
