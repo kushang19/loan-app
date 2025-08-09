@@ -1,6 +1,7 @@
 import React from "react";
+import { Controller } from "react-hook-form";
 
-const FormTextField = ({ field, register, error }) => {
+const FormTextField = ({ field, error, control }) => {
   const validation = {};
 
   if (field.validations?.isRequired) {
@@ -17,16 +18,30 @@ const FormTextField = ({ field, register, error }) => {
   return (
     <div className="flex flex-col">
       <label className="mb-1 font-medium">{field.title}</label>
-      <input
-        type="text"
-        placeholder={field.placeholder}
-        disabled={field.isDisable}
-        {...register(field.variable, validation)}
-        className={`p-2 border rounded shadow ${
-          error ? "border-red-500" : "border-gray-300"
-        }`}
+
+      <Controller
+        name={field.variable}
+        control={control}
+        rules={validation}
+        render={({ field: { onChange, onBlur, value, ref } }) => (
+          <input
+            type="text"
+            placeholder={field.placeholder}
+            disabled={field.isDisable}
+            onChange={onChange}
+            onBlur={onBlur}
+            value={value || ""}
+            ref={ref}
+            className={`p-2 border rounded shadow ${
+              error ? "border-red-500" : "border-gray-300"
+            }`}
+          />
+        )}
       />
-      {error && <span className="text-red-500 text-sm mt-1">{error.message}</span>}
+
+      {error && (
+        <span className="text-red-500 text-sm mt-1">{error.message}</span>
+      )}
     </div>
   );
 };

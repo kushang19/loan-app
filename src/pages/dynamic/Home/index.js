@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import CustomCard from "../../shared/CustomCard/CustomCard";
-import CustomForm from "../../shared/CustomForm";
-import CustomButton from "../../shared/CustomButton/CustomButton";
-import OTPModal from "../../Modals/OTPModal";
-import ROUTES from "../../routes";
+import CustomCard from "../../../shared/CustomCard/CustomCard";
+import CustomForm from "../../../shared/CustomForm";
+import CustomButton from "../../../shared/CustomButton/CustomButton";
+import ROUTES from "../../../routes";
+import OTPModal from "../../../Modals/OTPModal";
+
 
 const mobileInput = [
   {
@@ -47,13 +48,15 @@ const Home = () => {
       <div className="max-w-md mx-auto p-2 mt-10">
          <h1
             className="text-blue-800"
-            style={{ margin: "20px 0", fontSize: "27px", fontWeight: "bold", textAlign: "center" }}
+            style={{ margin: "10px 0", fontSize: "27px", fontWeight: "bold", textAlign: "center" }}
           >
             Please Enter Your Mobile Number To Login Our Loan Application.
-            <span className="text-5xl">💰</span>
-            <span className="text-6xl">💰</span>
-            <span className="text-7xl">💰</span>
           </h1>
+          <div className="gold-coins mb-10 text-center" >
+            <span className="text-5xl">💰</span>
+            <span className="text-5xl">💰</span>
+            <span className="text-5xl">💰</span>
+          </div>
         <CustomCard>
           <CustomForm config={mobileInput} onSubmit={handleFormSubmit}>
             <div className="flex justify-end flex-wrap mt-4 w-full">
@@ -62,7 +65,7 @@ const Home = () => {
               rounded="rounded-full"
               hover="hover:bg-blue-700"
             >
-              Submit
+              Let's Go
             </CustomButton>
             </div>
           </CustomForm>
@@ -72,7 +75,7 @@ const Home = () => {
           isOpen={showOTP}
           onClose={() => setShowOTP(false)}
           timerSeconds={120} // you can customize the timer
-          route={ROUTES.personalDetails1}
+          route={ROUTES.personalDetails.replace(":step", 1)}
         />
       </div>
     </>

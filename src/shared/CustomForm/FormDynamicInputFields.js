@@ -19,9 +19,10 @@ const FormDynamicInputFields = ({
   watch,
   errors,
 }) => {
+  
   switch (field.type) {
     case "textField":
-      return <FormTextField field={field} register={register} error={error} />;
+      return <FormTextField field={field} error={error} control={control} />;
     case "dateField":
       return <FormDateField field={field} register={register} error={error} />;
     case "mobileField":

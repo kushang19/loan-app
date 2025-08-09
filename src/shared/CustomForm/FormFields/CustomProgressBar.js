@@ -28,7 +28,7 @@ const CustomProgressBar = ({ steps, currentStep, onBack }) => {
         {steps.map((step, index) => (
           <div
             key={index}
-            className={`text-center w-full ${
+            className={`text-center  w-full ${
               index + 1 === currentStep ? "text-blue-600 font-semibold" : ""
             }`}
           >
