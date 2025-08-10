@@ -55,6 +55,7 @@ const OTPModal = ({ isOpen, onClose, timerSeconds = 120, route }) => {
     if (newOtp.every((v) => v !== "")) {
       const enteredOTP = newOtp.join("");
       if (enteredOTP === correctOTP) {
+        sessionStorage.setItem("otpVerified", "true");
         console.log("Success !!");
         onClose();
         navigate(route);

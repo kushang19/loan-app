@@ -7,6 +7,34 @@ const professionJSON = {
   salaried: [
     {
       id: 1,
+      title: "Enter Company Name",
+      placeholder: "Enter Company Name",
+      variable: "companyName",
+      type: "textField",
+      isDisable: false,
+      validations: {
+        isRequired: true,
+        isRequiredError: "Company Name is Required",
+        regex: "",
+        regexError: "Please enter your Company Name",
+      },
+    },
+    {
+      id: 2,
+      title: "Location of Company",
+      placeholder: "Eg. Mumbai Andheri",
+      variable: "companyLocation",
+      type: "textField",
+      isDisable: false,
+      validations: {
+        isRequired: true,
+        isRequiredError: "Location is Required",
+        regex: "",
+        regexError: "Please enter your Location",
+      },
+    },
+    {
+      id: 3,
       title: "Enter Bank Name",
       placeholder: "Enter Bank Name",
       variable: "bankName",
@@ -20,7 +48,7 @@ const professionJSON = {
       },
     },
     {
-      id: 2,
+      id: 4,
       title: "Please Enter Monthly Salary",
       placeholder: "Enter Monthly Salary",
       variable: "monthlySalary",
@@ -34,7 +62,7 @@ const professionJSON = {
       },
     },
     {
-      id: 3,
+      id: 5,
       title: "Total Work Experience",
       placeholder: "Select",
       variable: "totalWorkExperience",

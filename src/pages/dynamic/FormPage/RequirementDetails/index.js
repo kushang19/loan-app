@@ -121,7 +121,7 @@ const RequirementDetails = () => {
             : "Select Loan Amount (₹)"}
         </h2>
         {stepNum === 2 && (
-          <div className="p-4">
+          <div className="p-1 mb-4">
             <AmountRangeSection
               minAmount={50000}
               maxAmount={1000000}
