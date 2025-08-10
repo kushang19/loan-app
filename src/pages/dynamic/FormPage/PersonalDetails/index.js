@@ -30,6 +30,7 @@ const PersonalDetails = () => {
     "Personal Details",
     "Requirement Details",
     "Professional Details",
+    "Confirmation",
   ];
 
   console.log("step useParams ", step);
@@ -71,34 +72,24 @@ const PersonalDetails = () => {
       navigate(ROUTES.personalDetails.replace(":step", 1), { replace: true });
   };
 
+    const setValueHandler = (storedStep) => {
+    Object.entries(storedStep).forEach(([key, value]) => {
+      if (typeof value === "object" && value !== null && "value" in value) {
+        // For react-select fields that store objects
+        setValue(key, value);
+      } else {
+        // For regular fields
+        setValue(key, value);
+      }
+    });
+  };
+
   // Prefill values when component mounts or step changes
   useEffect(() => {
     const storedStep1 = JSON.parse(sessionStorage.getItem("personalDetails-1"));
     const storedStep2 = JSON.parse(sessionStorage.getItem("personalDetails-2"));
-
-    if (storedStep1 && stepNum === 1) {
-      Object.entries(storedStep1).forEach(([key, value]) => {
-        if (typeof value === "object" && value !== null && "value" in value) {
-          // For react-select fields that store objects
-          setValue(key, value);
-        } else {
-          // For regular fields
-          setValue(key, value);
-        }
-      });
-    }
-
-    if (storedStep2 && stepNum === 2) {
-      Object.entries(storedStep2).forEach(([key, value]) => {
-        if (typeof value === "object" && value !== null && "value" in value) {
-          // For react-select fields that store objects
-          setValue(key, value);
-        } else {
-          // For regular fields
-          setValue(key, value);
-        }
-      });
-    }
+    if (storedStep1 && stepNum === 1) setValueHandler(storedStep1);
+    if (storedStep2 && stepNum === 2) setValueHandler(storedStep2);
   }, [stepNum, setValue]);
 
   return (
@@ -116,17 +107,19 @@ const PersonalDetails = () => {
         <CustomForm onSubmit={handleSubmit(onSubmit)}>
           <div className="form-details">
             {config.map((field) => (
-              <FormDynamicInputFields
-                key={field.id}
-                field={field}
-                register={register}
-                error={errors[field.variable]}
-                control={control}
-                setValue={setValue}
-                getValues={getValues}
-                watch={watch}
-                errors={errors}
-              />
+              <div className="mb-3">
+                <FormDynamicInputFields
+                  key={field.id}
+                  field={field}
+                  register={register}
+                  error={errors[field.variable]}
+                  control={control}
+                  setValue={setValue}
+                  getValues={getValues}
+                  watch={watch}
+                  errors={errors}
+                />
+              </div>
             ))}
           </div>
           <div className="flex justify-end gap-3 flex-wrap mt-4 w-full">

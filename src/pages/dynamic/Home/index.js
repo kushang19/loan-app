@@ -36,17 +36,19 @@ const Home = () => {
         <CustomForm config={mobileInput} onSubmit={handleSubmit(onSubmit)}>
           <div className="form-details">
             {mobileInput.map((field) => (
-              <FormDynamicInputFields
-                key={field.id}
-                field={field}
-                register={register}
-                error={errors[field.variable]}
-                control={control}
-                setValue={setValue}
-                getValues={getValues}
-                watch={watch}
-                errors={errors}
-              />
+              <div className="mb-3">
+                <FormDynamicInputFields
+                  key={field.id}
+                  field={field}
+                  register={register}
+                  error={errors[field.variable]}
+                  control={control}
+                  setValue={setValue}
+                  getValues={getValues}
+                  watch={watch}
+                  errors={errors}
+                />
+              </div>
             ))}
           </div>
           <div className="flex justify-end flex-wrap mt-4 w-full">

@@ -6,6 +6,8 @@ const AmountRangeSection = ({ minAmount = 50000, maxAmount = 1000000, setRsAmoun
   const [error, setError] = useState("");
   const [typingTimeout, setTypingTimeout] = useState(null);
 
+  const storedLoanAmount = JSON.parse(sessionStorage.getItem("loan-amount"));
+
   const formatAmount = (amt) => {
     if (isNaN(amt)) return "0";
     return amt.toLocaleString("en-IN");
@@ -81,6 +83,14 @@ const AmountRangeSection = ({ minAmount = 50000, maxAmount = 1000000, setRsAmoun
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (percentageFilled / 100) * circumference;
 
+  useEffect(() => {
+  if (storedLoanAmount) {
+    setAmount(storedLoanAmount);
+    setInputValue(formatAmount(storedLoanAmount));
+  }
+}, []);
+
+
   return (
     <div className="bg-white p-6 rounded-xl shadow-md max-w-3xl mx-auto mt-6">
       <h2 className="text-xl font-semibold mb-4">Required loan amount</h2>
@@ -113,7 +123,7 @@ const AmountRangeSection = ({ minAmount = 50000, maxAmount = 1000000, setRsAmoun
       {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
       {!error && (
-        <div className="mt-8 flex flex-col items-center justify-center text-center">
+        <div className="mt-8 flex flex-col items-center justify-center text-center" style={{display: "none"}}>
           <h2 className="text-lg font-semibold mb-2">Loan Calculator Summary</h2>
 
           <div className="relative w-40 h-40 mx-auto mb-4">

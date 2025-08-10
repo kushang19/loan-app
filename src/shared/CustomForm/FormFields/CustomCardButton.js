@@ -30,7 +30,8 @@ const CustomCardButton = ({
         <p className="text-sm text-gray-500 mb-4">{description}</p>
       )}
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+      {/* grid gap-4 md:grid-cols-2 lg:grid-cols-2 */}
+      <div className="grid gap-4 grid-cols-2 max-[480px]:grid-cols-1">
         {options?.map((option) => {
           const isSelected = value === option.value;
 

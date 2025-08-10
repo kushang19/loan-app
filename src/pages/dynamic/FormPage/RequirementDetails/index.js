@@ -11,7 +11,6 @@ import AmountRangeSection from "../../../../Modals/AmountRangeSection/AmountRang
 import FormDynamicInputFields from "../../../../shared/CustomForm/FormDynamicInputFields";
 import requirementJSON from "../../../../JSON/requirementJSON";
 
-
 const RequirementDetails = () => {
   const {
     register,
@@ -32,6 +31,7 @@ const RequirementDetails = () => {
     "Personal Details",
     "Requirement Details",
     "Professional Details",
+    "Confirmation",
   ];
   const config = requirementJSON[stepNum];
 
@@ -42,7 +42,10 @@ const RequirementDetails = () => {
   console.log("config ", stepNum, config);
 
   const onSubmit = (data) => {
+    data.selectedAmount = amountFetched;
     console.log(`Step ${stepNum} Data:`, data);
+
+  if(amountFetched) sessionStorage.setItem("loan-amount", JSON.stringify(amountFetched));
 
     // Get only the fields for the current step
     const allowedKeys = requirementJSON[stepNum].map((field) => field.variable);
@@ -60,17 +63,23 @@ const RequirementDetails = () => {
     );
 
     if (stepNum === 1) {
-      navigate(ROUTES.requirementDetails.replace(":step", 2), { replace: true });
+      navigate(ROUTES.requirementDetails.replace(":step", 2), {
+        replace: true,
+      });
     } else {
-      data.selectedAmount = amountFetched;
       console.log("Submitted Data:", data);
-      navigate(ROUTES.professionalDetails.replace(":step", 1), { replace: true });
+      navigate(ROUTES.professionalDetails.replace(":step", 1), {
+        replace: true,
+      });
     }
   };
 
   const backBtn = () => {
     if (stepNum === 1) navigate(ROUTES.personalDetails.replace(":step", 2));
-    else navigate(ROUTES.requirementDetails.replace(":step", 1), { replace: true });
+    else
+      navigate(ROUTES.requirementDetails.replace(":step", 1), {
+        replace: true,
+      });
   };
 
   const handleAmount = (amt) => {
@@ -78,13 +87,9 @@ const RequirementDetails = () => {
     setAmountFetched(amt);
   };
 
-useEffect(() => {
-  const storedStep1 = JSON.parse(sessionStorage.getItem("requirementDetails-1"));
-  const storedStep2 = JSON.parse(sessionStorage.getItem("requirementDetails-2"));
-
-  if (storedStep1 && stepNum === 1) {
-    Object.entries(storedStep1).forEach(([key, value]) => {
-      if (typeof value === 'object' && value !== null && 'value' in value) {
+  const setValueHandler = (storedStep) => {
+    Object.entries(storedStep).forEach(([key, value]) => {
+      if (typeof value === "object" && value !== null && "value" in value) {
         // For react-select fields that store objects
         setValue(key, value);
       } else {
@@ -92,24 +97,23 @@ useEffect(() => {
         setValue(key, value);
       }
     });
-  }
+  };
 
-  if (storedStep2 && stepNum === 2) {
-    Object.entries(storedStep2).forEach(([key, value]) => {
-      if (typeof value === 'object' && value !== null && 'value' in value) {
-        // For react-select fields that store objects
-        setValue(key, value);
-      } else {
-        // For regular fields
-        setValue(key, value);
-      }
-    });
-  }
-}, [stepNum, setValue]);
+  useEffect(() => {
+    const storedStep1 = JSON.parse(sessionStorage.getItem("requirementDetails-1"));
+    const storedStep2 = JSON.parse(sessionStorage.getItem("requirementDetails-2"));
+
+    if (storedStep1 && stepNum === 1) setValueHandler(storedStep1);
+    if (storedStep2 && stepNum === 2) setValueHandler(storedStep2);
+    
+  }, [stepNum, setValue]);
 
   return (
     <div className="max-w-md mx-auto p-2 mt-10">
-      <CustomProgressBar steps={steps} currentStep={2} />
+      <CustomProgressBar
+        steps={steps}
+        currentStep={stepNum === 1 ? 2.1 : 2.4}
+      />
       <CustomCard>
         <h2 className="text-blue-600 my-2 text-3xl font-bold">
           {stepNum === 1
@@ -128,17 +132,19 @@ useEffect(() => {
         <CustomForm onSubmit={handleSubmit(onSubmit)}>
           <div className="form-details">
             {config.map((field) => (
-              <FormDynamicInputFields
-                key={field.id}
-                field={field}
-                register={register}
-                error={errors[field.variable]}
-                control={control}
-                setValue={setValue}
-                getValues={getValues}
-                watch={watch}
-                errors={errors}
-              />
+              <div className="mb-3">
+                <FormDynamicInputFields
+                  key={field.id}
+                  field={field}
+                  register={register}
+                  error={errors[field.variable]}
+                  control={control}
+                  setValue={setValue}
+                  getValues={getValues}
+                  watch={watch}
+                  errors={errors}
+                />
+              </div>
             ))}
           </div>
           <div className="flex justify-end gap-3 flex-wrap mt-4 w-full">
