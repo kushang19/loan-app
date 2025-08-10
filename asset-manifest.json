@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/loan-app/static/css/main.44b6f97b.css",
-    "main.js": "/loan-app/static/js/main.a1bfaa46.js",
+    "main.css": "/loan-app/static/css/main.d4db1ada.css",
+    "main.js": "/loan-app/static/js/main.dea87bc9.js",
     "static/media/credit-card.webp": "/loan-app/static/media/credit-card.ae1b53baed2b2391a63d.webp",
     "static/media/BusinessLoan.jpg": "/loan-app/static/media/BusinessLoan.0b9cbe3830cee1871a48.jpg",
     "static/media/Gold_Loan.jpg": "/loan-app/static/media/Gold_Loan.4935bae237e8d515d0c9.jpg",
@@ -10,11 +10,11 @@
     "static/media/Personal_loan.avif": "/loan-app/static/media/Personal_loan.777c7473eaa97c714388.avif",
     "static/media/eye-password-hide.svg": "/loan-app/static/media/eye-password-hide.6791fbb4b1ff28329acbe5af6a3c69f1.svg",
     "index.html": "/loan-app/index.html",
-    "main.44b6f97b.css.map": "/loan-app/static/css/main.44b6f97b.css.map",
-    "main.a1bfaa46.js.map": "/loan-app/static/js/main.a1bfaa46.js.map"
+    "main.d4db1ada.css.map": "/loan-app/static/css/main.d4db1ada.css.map",
+    "main.dea87bc9.js.map": "/loan-app/static/js/main.dea87bc9.js.map"
   },
   "entrypoints": [
-    "static/css/main.44b6f97b.css",
-    "static/js/main.a1bfaa46.js"
+    "static/css/main.d4db1ada.css",
+    "static/js/main.dea87bc9.js"
   ]
 }
