@@ -15,7 +15,7 @@ import AboutUs from "./pages/static/AboutUs";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/loan-app">
       <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>
