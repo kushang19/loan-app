@@ -23,10 +23,10 @@ export const useLogic = () => {
   const handleCloseOTP = () => setShowOTP(false);
 
   useEffect(() => {
+    sessionStorage.removeItem('otpVerified');
     sessionStorage.removeItem('personalDetails-1');
     sessionStorage.removeItem('personalDetails-2');
-    sessionStorage.removeItem('requirementDetails-1');
-    sessionStorage.removeItem('requirementDetails-2');
+    sessionStorage.removeItem('requirementDetails');
     sessionStorage.removeItem('loan-amount');
     sessionStorage.removeItem('professionalDetails-1');
     sessionStorage.removeItem('professionalDetails-2');

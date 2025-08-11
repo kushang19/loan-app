@@ -18,6 +18,8 @@ const FormDynamicInputFields = ({
   control,
   watch,
   errors,
+  stepNum,
+  onCardSelect,
 }) => {
   switch (field.type) {
     case "textField":
@@ -121,6 +123,8 @@ const FormDynamicInputFields = ({
               : {}
           }
           errors={errors}
+          stepNum={stepNum} // pass from RequirementDetails
+          onCardSelect={onCardSelect}
         />
       );
 

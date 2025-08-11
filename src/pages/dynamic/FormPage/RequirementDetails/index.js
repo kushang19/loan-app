@@ -1,4 +1,4 @@
-// src/pages/PersonalDetails/PersonalDetails.jsx
+// src/pages/PersonalDetails/RequirementDetails.jsx
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -23,7 +23,7 @@ const RequirementDetails = () => {
   } = useForm({ reValidateMode: "onChange", mode: "onChange" });
 
   const navigate = useNavigate();
-  const { step } = useParams(); // Get step from route param
+  const { step } = useParams();
   const stepNum = parseInt(step, 10);
   const [amountFetched, setAmountFetched] = useState();
 
@@ -35,78 +35,46 @@ const RequirementDetails = () => {
   ];
   const config = requirementJSON[stepNum];
 
-  console.log("step useParams ", step);
-
-  console.log("stepNum ", stepNum);
-
-  console.log("config ", stepNum, config);
-
-  const onSubmit = (data) => {
-    data.selectedAmount = amountFetched;
-    console.log(`Step ${stepNum} Data:`, data);
-
-  if(amountFetched) sessionStorage.setItem("loan-amount", JSON.stringify(amountFetched));
-
-    // Get only the fields for the current step
-    const allowedKeys = requirementJSON[stepNum].map((field) => field.variable);
-    const filteredData = Object.keys(data)
-      .filter((key) => allowedKeys.includes(key))
-      .reduce((obj, key) => {
-        obj[key] = data[key];
-        return obj;
-      }, {});
-
-    // Store only the current step's keys in sessionStorage
-    sessionStorage.setItem(
-      `requirementDetails-${stepNum}`,
-      JSON.stringify(filteredData)
-    );
-
-    if (stepNum === 1) {
-      navigate(ROUTES.requirementDetails.replace(":step", 2), {
-        replace: true,
+  // 🟢 Load stored data if available
+  useEffect(() => {
+    const stored = JSON.parse(sessionStorage.getItem("requirementDetails"));
+    if (stored) {
+      Object.entries(stored).forEach(([key, value]) => {
+        setValue(key, value);
       });
-    } else {
-      console.log("Submitted Data:", data);
-      navigate(ROUTES.professionalDetails.replace(":step", 1), {
-        replace: true,
-      });
+      if (stored.selectedAmount) setAmountFetched(stored.selectedAmount);
     }
-  };
-
-  const backBtn = () => {
-    if (stepNum === 1) navigate(ROUTES.personalDetails.replace(":step", 2));
-    else
-      navigate(ROUTES.requirementDetails.replace(":step", 1), {
-        replace: true,
-      });
-  };
+  }, [setValue]);
 
   const handleAmount = (amt) => {
-    console.log(" Selected Amount ===> ", amt);
     setAmountFetched(amt);
   };
 
-  const setValueHandler = (storedStep) => {
-    Object.entries(storedStep).forEach(([key, value]) => {
-      if (typeof value === "object" && value !== null && "value" in value) {
-        // For react-select fields that store objects
-        setValue(key, value);
-      } else {
-        // For regular fields
-        setValue(key, value);
-      }
+  // 🟢 Step 1 card selection handler
+  const handleCardSelect = (selected) => {
+    const stored =
+      JSON.parse(sessionStorage.getItem("requirementDetails")) || {};
+    const updated = { ...stored, cardChoice: selected };
+    sessionStorage.setItem("requirementDetails", JSON.stringify(updated));
+    navigate(ROUTES.requirementDetails.replace(":step", 2), { replace: true });
+  };
+
+  // 🟢 Form submit (Step 2)
+  const onSubmit = (data) => {
+    const stored =
+      JSON.parse(sessionStorage.getItem("requirementDetails")) || {};
+    const updated = { ...stored, ...data, selectedAmount: amountFetched };
+    sessionStorage.setItem("requirementDetails", JSON.stringify(updated));
+
+    navigate(ROUTES.professionalDetails.replace(":step", 1), {
+      replace: true,
     });
   };
 
-  useEffect(() => {
-    const storedStep1 = JSON.parse(sessionStorage.getItem("requirementDetails-1"));
-    const storedStep2 = JSON.parse(sessionStorage.getItem("requirementDetails-2"));
-
-    if (storedStep1 && stepNum === 1) setValueHandler(storedStep1);
-    if (storedStep2 && stepNum === 2) setValueHandler(storedStep2);
-    
-  }, [stepNum, setValue]);
+  const backBtn = () => {
+    if(stepNum === 1) navigate(ROUTES.personalDetails.replace(":step", 2), { replace: true });
+    else navigate(ROUTES.requirementDetails.replace(":step", 1), { replace: true });
+  };
 
   return (
     <div className="max-w-md mx-auto p-2 mt-10">
@@ -120,6 +88,8 @@ const RequirementDetails = () => {
             ? "Select Your Desired Product"
             : "Select Loan Amount (₹)"}
         </h2>
+
+        {/* Step 2 amount range */}
         {stepNum === 2 && (
           <div className="p-1 mb-4">
             <AmountRangeSection
@@ -129,12 +99,13 @@ const RequirementDetails = () => {
             />
           </div>
         )}
-        <CustomForm onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-details">
+
+        {/* Step 1 → only cards, click to select */}
+        {stepNum === 1 && (
+          <CustomForm>
             {config.map((field) => (
-              <div className="mb-3">
+              <div key={field.id} className="mb-3">
                 <FormDynamicInputFields
-                  key={field.id}
                   field={field}
                   register={register}
                   error={errors[field.variable]}
@@ -143,25 +114,57 @@ const RequirementDetails = () => {
                   getValues={getValues}
                   watch={watch}
                   errors={errors}
+                  stepNum={stepNum} // ✅ added
+                  onCardSelect={handleCardSelect}
                 />
               </div>
             ))}
-          </div>
-          <div className="flex justify-end gap-3 flex-wrap mt-4 w-full">
-            <CustomButton
-              hover="hover:bg-blue-700"
-              rounded="rounded-full"
-              onClick={backBtn}
-              title="Back"
-            />
-            <CustomButton
-              type="submit"
-              hover="hover:bg-blue-700"
-              rounded="rounded-full"
-              title="Next"
-            />
-          </div>
-        </CustomForm>
+            <div className="flex justify-end gap-3 flex-wrap mt-4 w-full">
+              <CustomButton
+                hover="hover:bg-blue-700"
+                rounded="rounded-full"
+                onClick={backBtn}
+                title="Back"
+              />
+            </div>
+          </CustomForm>
+        )}
+
+        {/* Step 2 → show form + buttons */}
+        {stepNum === 2 && (
+          <CustomForm onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-details">
+              {config.map((field) => (
+                <div key={field.id} className="mb-3">
+                  <FormDynamicInputFields
+                    field={field}
+                    register={register}
+                    error={errors[field.variable]}
+                    control={control}
+                    setValue={setValue}
+                    getValues={getValues}
+                    watch={watch}
+                    errors={errors}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="flex justify-end gap-3 flex-wrap mt-4 w-full">
+              <CustomButton
+                hover="hover:bg-blue-700"
+                rounded="rounded-full"
+                onClick={backBtn}
+                title="Back"
+              />
+              <CustomButton
+                type="submit"
+                hover="hover:bg-blue-700"
+                rounded="rounded-full"
+                title="Next"
+              />
+            </div>
+          </CustomForm>
+        )}
       </CustomCard>
     </div>
   );

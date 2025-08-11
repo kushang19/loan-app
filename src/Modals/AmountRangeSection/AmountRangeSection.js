@@ -6,7 +6,7 @@ const AmountRangeSection = ({ minAmount = 50000, maxAmount = 1000000, setRsAmoun
   const [error, setError] = useState("");
   const [typingTimeout, setTypingTimeout] = useState(null);
 
-  const storedLoanAmount = JSON.parse(sessionStorage.getItem("loan-amount"));
+  const storedLoanAmount = JSON.parse(sessionStorage.getItem("requirementDetails"));
 
   const formatAmount = (amt) => {
     if (isNaN(amt)) return "0";
@@ -84,9 +84,9 @@ const AmountRangeSection = ({ minAmount = 50000, maxAmount = 1000000, setRsAmoun
   const strokeDashoffset = circumference - (percentageFilled / 100) * circumference;
 
   useEffect(() => {
-  if (storedLoanAmount) {
-    setAmount(storedLoanAmount);
-    setInputValue(formatAmount(storedLoanAmount));
+  if (storedLoanAmount?.selectedAmount) {
+    setAmount(storedLoanAmount?.selectedAmount);
+    setInputValue(formatAmount(storedLoanAmount?.selectedAmount));
   }
 }, []);
 

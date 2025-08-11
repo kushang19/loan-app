@@ -1,5 +1,6 @@
 import React from "react";
 import { useController } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const CustomCardButton = ({
   control,
@@ -8,8 +9,10 @@ const CustomCardButton = ({
   description,
   options,
   isDisabled,
+  onCardSelect,
   rules,
   errors,
+  stepNum, // pass this in from FormDynamicInputFields
 }) => {
   const {
     field: { onChange, value },
@@ -18,6 +21,24 @@ const CustomCardButton = ({
     control,
     rules,
   });
+
+  const navigate = useNavigate();
+
+  const handleSelect = (option) => {
+    // Update form state
+    onChange(option.value);
+
+    // Merge into requirementDetails in sessionStorage
+    const stored =
+      JSON.parse(sessionStorage.getItem("requirementDetails")) || {};
+    stored[name] = option;
+    sessionStorage.setItem("requirementDetails", JSON.stringify(stored));
+
+    // Auto-navigate if step 1
+    if (stepNum === 1) {
+      navigate(`/requirement-details/2`, { replace: true });
+    }
+  };
 
   return (
     <div className="form-group mb-6">
@@ -30,7 +51,6 @@ const CustomCardButton = ({
         <p className="text-sm text-gray-500 mb-4">{description}</p>
       )}
 
-      {/* grid gap-4 md:grid-cols-2 lg:grid-cols-2 */}
       <div className="grid gap-4 grid-cols-2 max-[480px]:grid-cols-1">
         {options?.map((option) => {
           const isSelected = value === option.value;
@@ -38,7 +58,12 @@ const CustomCardButton = ({
           return (
             <div
               key={option.value}
-              onClick={() => onChange(option.value)}
+              onClick={() => {
+                onChange(option.value);
+                if (onCardSelect && stepNum === 1) {
+                  onCardSelect(option); // ✅ navigate
+                }
+              }}
               className={`p-4 border rounded-xl shadow-sm cursor-pointer transition-all text-center ${
                 isSelected
                   ? "border-blue-500 bg-blue-50 shadow-md"
