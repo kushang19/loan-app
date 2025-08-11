@@ -102,6 +102,8 @@ const FormDynamicInputFields = ({
               : {}
           }
           errors={errors}
+          stepNum={stepNum} // pass from professionalDetails
+          onCardSelect={onCardSelect}
         />
       );
     case "cardButton":

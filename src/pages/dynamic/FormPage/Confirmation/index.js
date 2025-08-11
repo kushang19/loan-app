@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React from "react";
+import { Link } from "react-router-dom";
 const lenders = [
   {
     name: "HDFC Bank",
@@ -19,14 +19,25 @@ const lenders = [
 ];
 
 const ConfirmationPage = () => {
-
-    const personalD = JSON.parse(sessionStorage.getItem('personalDetails-1'));
+  const personalD = JSON.parse(sessionStorage.getItem("personalDetails-1"));
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-100 to-purple-200 flex flex-col items-center justify-center px-4 py-8">
+      <div className="flex flex-col items-center justify-center text-center mb-10 mt-10">
+        <Link
+          to="/"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          Go Back Home
+        </Link>
+      </div>
+
       {/* Animation and Heading */}
       <div className="animate-bounce text-4xl sm:text-5xl font-bold text-purple-700 mb-4 text-center">
-        🎉 Congratulations! <span>{personalD?.firstName} {personalD?.lastName}</span>
+        🎉 Congratulations!{" "}
+        <span>
+          {personalD?.firstName} {personalD?.lastName}
+        </span>
       </div>
       <p className="text-lg text-gray-700 text-center mb-8">
         Your loan application has been successfully submitted.
@@ -40,16 +51,21 @@ const ConfirmationPage = () => {
             className="bg-white shadow-md rounded-lg p-5 flex flex-col items-center transition-transform hover:scale-105"
           >
             <img src={lender.logo} alt={lender.name} className="h-16 mb-4" />
-            <h3 className="text-xl font-semibold text-gray-800">{lender.name}</h3>
-            <p className="text-sm text-gray-500 mt-2">Interest Rate: {lender.interest}</p>
+            <h3 className="text-xl font-semibold text-gray-800">
+              {lender.name}
+            </h3>
+            <p className="text-sm text-gray-500 mt-2">
+              Interest Rate: {lender.interest}
+            </p>
           </div>
         ))}
       </div>
 
       {/* Thank You Message */}
       <p className="mt-10 text-center text-md text-gray-800 max-w-xl">
-        Our trusted lenders have received your information and will reach out to you shortly.
-        Thank you for choosing <span className="font-semibold text-purple-700">Loan App</span>!
+        Our trusted lenders have received your information and will reach out to
+        you shortly. Thank you for choosing{" "}
+        <span className="font-semibold text-purple-700">Loan App</span>!
       </p>
     </div>
   );

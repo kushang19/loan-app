@@ -1,5 +1,6 @@
 import React from "react";
 import { useController } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const CustomRadioButton2 = ({
   control,
@@ -10,6 +11,8 @@ const CustomRadioButton2 = ({
   isDisabled,
   rules,
   errors,
+  stepNum,
+  onCardSelect,
 }) => {
   const {
     field: { onChange, value },
@@ -18,6 +21,24 @@ const CustomRadioButton2 = ({
     control,
     rules,
   });
+
+    const navigate = useNavigate();
+
+  const handleSelect = (option) => {
+    // Update form state
+    onChange(option.value);
+
+    // Merge into professionalDetails in sessionStorage
+    const stored =
+      JSON.parse(sessionStorage.getItem("professionalDetails")) || {};
+    stored[name] = option;
+    sessionStorage.setItem("professionalDetails", JSON.stringify(stored));
+
+    // Auto-navigate if step 1
+    if (stepNum === 1) {
+      navigate(`/professional-details/2`, { replace: true });
+    }
+  }
 
   return (
     <div className="form-group mb-6">
@@ -72,7 +93,13 @@ const CustomRadioButton2 = ({
                 type="radio"
                 value={option.value}
                 checked={isSelected}
-                onChange={() => onChange(option.value)}
+                // onChange={() => onChange(option.value)}
+                onClick={() => {
+                onChange(option.value);
+                if (onCardSelect && stepNum === 1) {
+                  onCardSelect(option); // ✅ navigate
+                }
+              }}
                 disabled={isDisabled}
                 className="hidden"
               />

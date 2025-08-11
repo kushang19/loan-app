@@ -27,9 +27,7 @@ export const useLogic = () => {
     sessionStorage.removeItem('personalDetails-1');
     sessionStorage.removeItem('personalDetails-2');
     sessionStorage.removeItem('requirementDetails');
-    sessionStorage.removeItem('loan-amount');
-    sessionStorage.removeItem('professionalDetails-1');
-    sessionStorage.removeItem('professionalDetails-2');
+    sessionStorage.removeItem('professionalDetails');
   },[])
 
   return {
