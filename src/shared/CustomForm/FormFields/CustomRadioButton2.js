@@ -22,7 +22,7 @@ const CustomRadioButton2 = ({
     rules,
   });
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleSelect = (option) => {
     // Update form state
@@ -38,7 +38,7 @@ const CustomRadioButton2 = ({
     if (stepNum === 1) {
       navigate(`/professional-details/2`, { replace: true });
     }
-  }
+  };
 
   return (
     <div className="form-group mb-6">
@@ -89,7 +89,7 @@ const CustomRadioButton2 = ({
                   </span>
                 </div>
               </div>
-              <input
+              {/* <input
                 type="radio"
                 value={option.value}
                 checked={isSelected}
@@ -100,6 +100,19 @@ const CustomRadioButton2 = ({
                   onCardSelect(option); // ✅ navigate
                 }
               }}
+                disabled={isDisabled}
+                className="hidden"
+              /> */}
+              <input
+                type="radio"
+                value={option.value}
+                checked={isSelected}
+                onChange={() => {
+                  onChange(option.value); // update form state
+                  if (onCardSelect && stepNum === 1) {
+                    onCardSelect(option); // navigate if needed
+                  }
+                }}
                 disabled={isDisabled}
                 className="hidden"
               />

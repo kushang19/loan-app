@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+
+import { postData, generateOtp, verifyOtp, getData } from "../../../../api/api";
+
 const lenders = [
   {
     name: "HDFC Bank",
@@ -19,7 +22,38 @@ const lenders = [
 ];
 
 const ConfirmationPage = () => {
-  const personalD = JSON.parse(sessionStorage.getItem("personalDetails-1"));
+  const mobileNumber = JSON.parse(sessionStorage.getItem("mobileNumber"));
+  const personalDetails_1 = JSON.parse(
+    sessionStorage.getItem("personalDetails-1")
+  );
+  const personalDetails_2 = JSON.parse(
+    sessionStorage.getItem("personalDetails-2")
+  );
+  const requirementDetails = JSON.parse(
+    sessionStorage.getItem("requirementDetails")
+  );
+  const professionalDetails = JSON.parse(
+    sessionStorage.getItem("professionalDetails")
+  );
+
+  const data = {
+    ...mobileNumber,
+    ...personalDetails_1,
+    ...personalDetails_2,
+    ...requirementDetails,
+    ...professionalDetails,
+  };
+
+  const postDataAPIHandler = async (payload) => {
+    await postData(payload);
+  };
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      postDataAPIHandler(data);
+    }
+  }, [data]);
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-100 to-purple-200 flex flex-col items-center justify-center px-4 py-8">
@@ -36,7 +70,7 @@ const ConfirmationPage = () => {
       <div className="animate-bounce text-4xl sm:text-5xl font-bold text-purple-700 mb-4 text-center">
         🎉 Congratulations!{" "}
         <span>
-          {personalD?.firstName} {personalD?.lastName}
+          {personalDetails_1?.firstName} {personalDetails_1?.lastName}
         </span>
       </div>
       <p className="text-lg text-gray-700 text-center mb-8">

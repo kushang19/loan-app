@@ -1,7 +1,6 @@
-// src/pages/PersonalDetails/RequirementDetails.jsx
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import CustomProgressBar from "../../../../shared/CustomForm/FormFields/CustomProgressBar";
 import CustomForm from "../../../../shared/CustomForm";
 import CustomButton from "../../../../shared/CustomButton/CustomButton";

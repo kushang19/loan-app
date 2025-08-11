@@ -170,7 +170,7 @@ const ProfessionalDetails = () => {
                 type="submit"
                 hover="hover:bg-blue-700"
                 rounded="rounded-full"
-                title="Next"
+                title="Submit"
               />
             </div>
           </CustomForm>
